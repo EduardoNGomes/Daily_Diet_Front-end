@@ -1,12 +1,9 @@
-import './global.css'
+import { Home } from './pages/Home'
 
-function App() {
-  console.log(import.meta.env.VITE_HI)
+export const App = () => {
   return (
     <>
-      <h1 className="bg-slate-600 text-base text-red-50">Hello World</h1>
+      <Home />
     </>
   )
 }
-
-export default App
