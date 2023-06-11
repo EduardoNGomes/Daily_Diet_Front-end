@@ -1,17 +1,11 @@
-import logo from '../assets/Logo.svg'
-import perfil from '../assets/perfil.jpg'
+import { Profile } from '../components/Profile'
+import { Statistic } from '../components/Statistic'
 
 export const Home = () => {
   return (
-    <>
-      <div className="flex items-center justify-between">
-        <img src={logo} alt="" />
-        <img
-          src={perfil}
-          alt=""
-          className="w-fit object-cover h-10 rounded-full border-2 border-black"
-        />
-      </div>
-    </>
+    <main className="flex flex-col gap-10">
+      <Profile />
+      <Statistic />
+    </main>
   )
 }
