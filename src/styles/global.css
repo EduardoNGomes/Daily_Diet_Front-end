@@ -4,6 +4,8 @@
 
 * {
   font-family: 'Nunito Sans', sans-serif;
+
+  transition: all 1s ease-in-out;
 }
 
 body {
