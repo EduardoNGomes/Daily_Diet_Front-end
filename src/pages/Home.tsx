@@ -65,7 +65,7 @@ const response = [
 
 export const Home = () => {
   return (
-    <main className="flex flex-col gap-10">
+    <main className="flex flex-col gap-10 p-6 ">
       <Profile avatarUrl={perfil} />
       <Statistic
         percentage={
