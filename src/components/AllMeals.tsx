@@ -33,7 +33,11 @@ export const AllMeals = ({ AllMeals }: AllMealsProps) => {
           <p className="flex-1 text-base leading-5 text-gray-2 font-normal">
             {meal.name}
           </p>
-          <div className=" rounded-full h-3 w-3 bg-red-mid">
+          <div
+            className={` rounded-full h-3 w-3 ${
+              meal.isOnDiet === 1 ? 'bg-green-mid' : 'bg-red-mid'
+            }`}
+          >
             <span className="h-3 w-3 bg-red-mid"></span>
           </div>
         </div>
