@@ -76,7 +76,14 @@ export const Home = () => {
             : statistic.percentageOffDiet
         }
       />
-      <Button title="Nova refeição" Icon={Plus} />
+      <div className="flex flex-col gap-3 items-center">
+        <h3 className="self-start text-base leading-5 text-gray-1">
+          Refeições
+        </h3>
+
+        <Button title="Nova refeição" Icon={Plus} />
+      </div>
+
       {response.map((element) => (
         <AllMeals key={element.data} AllMeals={element} />
       ))}
