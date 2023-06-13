@@ -13,7 +13,13 @@ export const Header = ({ title, subtitle, iconColor }: HeaderProps) => {
         <ArrowLeft size={24} className={iconColor} />
       </button>
       <div className="flex flex-col items-center">
-        <h1 className="text-gray-1 text-3xl font-bold">{title}</h1>
+        <h1
+          className={`text-gray-1 font-bold ${
+            subtitle ? 'text-3xl' : 'text-lg'
+          }`}
+        >
+          {title}
+        </h1>
         {subtitle && (
           <p className="text-gray-2 font-normal text-sm">{subtitle}</p>
         )}
