@@ -1,4 +1,4 @@
-import { HeaderMetrics } from '../components/HeaderMetrics'
+import { Header } from '../components/Header'
 import { LayoutPag } from '../components/LayoutPage'
 import { MainMetrics } from '../components/MainMetrics'
 
@@ -18,7 +18,15 @@ export const Metrics = () => {
         Number(statistic.percentageOnDiet) >= 50 ? 'bg-green-mid' : 'bg-red-mid'
       }
     >
-      <HeaderMetrics percentage={statistic.percentageOnDiet} />
+      <Header
+        title={`${statistic.percentageOnDiet}%`}
+        subtitle="das refeições dentro da dieta"
+        iconColor={
+          Number(statistic.percentageOnDiet) >= 50
+            ? 'text-green-dark'
+            : 'text-red-dark'
+        }
+      />
       <MainMetrics statistic={statistic} />
     </LayoutPag>
   )
