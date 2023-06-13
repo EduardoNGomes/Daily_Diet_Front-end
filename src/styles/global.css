@@ -7,3 +7,8 @@
 
   transition: all 1s ease-in-out;
 }
+
+body {
+  max-width: 1280px;
+  margin: 0 auto;
+}

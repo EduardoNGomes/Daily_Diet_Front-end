@@ -1,8 +1,10 @@
+import { Plus } from '@phosphor-icons/react'
+
 import { Profile } from '../components/Profile'
 import { Statistic } from '../components/Statistic'
 // Simulate image User
 import perfil from '../assets/perfil.jpg'
-import { ButtonNewMeal } from '../components/ButtonNewMeal'
+import { Button } from '../components/Button'
 import { AllMeals } from '../components/AllMeals'
 
 // simulate statisticUser
@@ -74,7 +76,7 @@ export const Home = () => {
             : statistic.percentageOffDiet
         }
       />
-      <ButtonNewMeal />
+      <Button title="Nova refeição" Icon={Plus} />
       {response.map((element) => (
         <AllMeals key={element.data} AllMeals={element} />
       ))}
