@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Button } from './Button'
 import { ButtonForm } from './ButtonForm'
-
 interface FormProps {
   titleFunction: string
 }
@@ -38,9 +37,9 @@ export const Form = ({ titleFunction }: FormProps) => {
   }
 
   return (
-    <form className="w-full flex flex-col gap-3">
+    <form className="flex w-full flex-col gap-3">
       <div className="flex flex-col gap-2">
-        <label htmlFor="name" className="text-gray-2 font-bold text-sm">
+        <label htmlFor="name" className="text-sm font-bold text-gray-2">
           Nome
         </label>
         <input
@@ -48,7 +47,7 @@ export const Form = ({ titleFunction }: FormProps) => {
           onChange={(e) => setName(e.target.value)}
           type="text"
           id="name"
-          className="p-3 rounded-md w-full border border-gray-5 text-gray-1 text-base font-normal"
+          className="w-full rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1"
         />
       </div>
       <div className="flex flex-col gap-2">
@@ -58,35 +57,35 @@ export const Form = ({ titleFunction }: FormProps) => {
           onChange={(e) => setDescription(e.target.value)}
           name=""
           id="description"
-          className="resize-none p-3 rounded-md w-full border border-gray-5 text-gray-1 text-base font-normal h-14 "
+          className="h-14 w-full resize-none rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1 "
         />
       </div>
 
       <div className="flex  gap-2">
         <div>
-          <label htmlFor="data" className="text-gray-2 font-bold text-sm">
+          <label htmlFor="data" className="text-sm font-bold text-gray-2">
             Data
           </label>
           <input
             value={date}
             onChange={(e) => setDate(e.target.value)}
-            type="text"
+            type="date"
             id="data"
-            className="p-3 rounded-md w-full border border-gray-5 text-gray-1 text-base font-normal"
+            className="w-full rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1"
             placeholder="dd/mm/yyyy"
           />
         </div>
 
         <div>
-          <label htmlFor="time" className="text-gray-2 font-bold text-sm">
+          <label htmlFor="time" className="text-sm font-bold text-gray-2">
             Hora
           </label>
           <input
             value={time}
             onChange={(e) => setTime(e.target.value)}
-            type="text"
+            type="time"
             id="time"
-            className="p-3 rounded-md w-full border border-gray-5 text-gray-1 text-base font-normal"
+            className="w-full rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1"
             placeholder="hh:mm"
           />
         </div>

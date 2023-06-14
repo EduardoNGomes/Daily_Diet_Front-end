@@ -1,3 +1,4 @@
 {
-  "extends":"@rocketseat/eslint-config/react"
+  "root": true,
+  "extends": ["plugin:tailwindcss/recommended", "@rocketseat/eslint-config/react"]
 }

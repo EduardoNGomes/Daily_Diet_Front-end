@@ -7,7 +7,7 @@ interface StatisticProps {
 export const Statistic = ({ percentage }: StatisticProps) => {
   return (
     <div
-      className={`flex flex-col w-full gap-2 items-center pt-2 px-2 pb-6   rounded ${
+      className={`flex w-full flex-col items-center gap-2 rounded px-2 pb-6   pt-2 ${
         Number(percentage) >= 50 ? 'bg-green-light' : 'bg-red-light'
       }`}
     >
@@ -19,10 +19,10 @@ export const Statistic = ({ percentage }: StatisticProps) => {
           }
         />
       </span>
-      <h2 className="text-gray-1 font-bold leading-10 text-5xl">
+      <h2 className="text-5xl font-bold leading-10 text-gray-1">
         <span>{percentage}</span>%
       </h2>
-      <p className="text-gray-2 text-sm">das refeições dentro da dieta</p>
+      <p className="text-sm text-gray-2">das refeições dentro da dieta</p>
     </div>
   )
 }

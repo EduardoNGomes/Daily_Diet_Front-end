@@ -8,7 +8,7 @@ interface LayoutPageProps {
 export const LayoutPag = ({ children, color }: LayoutPageProps) => {
   return (
     <div
-      className={`w-full h-screen flex flex-col 
+      className={`flex h-screen w-full flex-col 
         ${color}
       `}
     >

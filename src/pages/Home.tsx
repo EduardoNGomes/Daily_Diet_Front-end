@@ -66,6 +66,10 @@ const response = [
 ]
 
 export const Home = () => {
+  const handlerChangePage = () => {
+    console.log('oi')
+  }
+
   return (
     <main className="flex flex-col gap-10 p-6 ">
       <Profile avatarUrl={perfil} />
@@ -76,12 +80,12 @@ export const Home = () => {
             : statistic.percentageOffDiet
         }
       />
-      <div className="flex flex-col gap-3 items-center">
+      <div className="flex flex-col items-center gap-3">
         <h3 className="self-start text-base leading-5 text-gray-1">
           Refeições
         </h3>
 
-        <Button title="Nova refeição" Icon={Plus} />
+        <Button title="Nova refeição" Icon={Plus} onClick={handlerChangePage} />
       </div>
 
       {response.map((element) => (

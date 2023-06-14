@@ -8,20 +8,20 @@ interface HeaderProps {
 
 export const Header = ({ title, subtitle, iconColor }: HeaderProps) => {
   return (
-    <header className="p-6 flex flex-col items-center">
+    <header className="flex flex-col items-center p-6">
       <button className="self-start">
         <ArrowLeft size={24} className={iconColor} />
       </button>
       <div className="flex flex-col items-center">
         <h1
-          className={`text-gray-1 font-bold ${
+          className={`font-bold text-gray-1 ${
             subtitle ? 'text-3xl' : 'text-lg'
           }`}
         >
           {title}
         </h1>
         {subtitle && (
-          <p className="text-gray-2 font-normal text-sm">{subtitle}</p>
+          <p className="text-sm font-normal text-gray-2">{subtitle}</p>
         )}
       </div>
     </header>
