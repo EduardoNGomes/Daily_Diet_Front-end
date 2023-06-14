@@ -1,17 +1,31 @@
 import { useState } from 'react'
 import { Button } from './Button'
 import { ButtonForm } from './ButtonForm'
+
 interface FormProps {
-  titleFunction: string
+  state: 'create' | 'update'
+  data?: {
+    id: string
+    user_id: string
+    name: string
+    description: string
+    isOnDiet: boolean | number
+    created_at: string
+    updated_at: string
+  }
 }
 
-export const Form = ({ titleFunction }: FormProps) => {
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const [date, setDate] = useState('')
+export const Form = ({ state, data }: FormProps) => {
+  const [name, setName] = useState(data ? data.name : '')
+  const [description, setDescription] = useState(data ? data.description : '')
+  const [date, setDate] = useState(data ? data.updated_at.split(' ')[0] : '')
   const [time, setTime] = useState('')
-  const [isOnDietActive, setIsOnDietActive] = useState(false)
-  const [isOffDietActive, setIsOffDietActive] = useState(false)
+  const [isOnDietActive, setIsOnDietActive] = useState(
+    data?.isOnDiet === 1 || false,
+  )
+  const [isOffDietActive, setIsOffDietActive] = useState(
+    data?.isOnDiet === 0 || false,
+  )
 
   const handleONActive = () => {
     setIsOnDietActive((prevState) => !prevState)
@@ -107,7 +121,10 @@ export const Form = ({ titleFunction }: FormProps) => {
         />
       </div>
 
-      <Button title={titleFunction} onClick={handleSubmit} />
+      <Button
+        title={state === 'create' ? 'Cadastrar refeição' : 'Salvar alterações'}
+        onClick={handleSubmit}
+      />
     </form>
   )
 }

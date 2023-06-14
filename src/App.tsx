@@ -9,7 +9,7 @@ import { Edit } from './pages/Edit'
 export const App = () => {
   return (
     <>
-      <Edit />
+      <New />
     </>
   )
 }
