@@ -1,4 +1,5 @@
-import { HeaderMetrics } from '../components/HeaderMetrics'
+import { Header } from '../components/Header'
+import { LayoutPag } from '../components/LayoutPage'
 import { MainMetrics } from '../components/MainMetrics'
 
 const statistic = {
@@ -12,17 +13,21 @@ const statistic = {
 
 export const Metrics = () => {
   return (
-    <div
-      className={`w-full h-screen flex flex-col 
-        ${
-          Number(statistic.percentageOnDiet) >= 50
-            ? 'bg-green-mid'
-            : 'bg-red-mid'
-        }
-      `}
+    <LayoutPag
+      color={
+        Number(statistic.percentageOnDiet) >= 50 ? 'bg-green-mid' : 'bg-red-mid'
+      }
     >
-      <HeaderMetrics percentage={statistic.percentageOnDiet} />
+      <Header
+        title={`${statistic.percentageOnDiet}%`}
+        subtitle="das refeições dentro da dieta"
+        iconColor={
+          Number(statistic.percentageOnDiet) >= 50
+            ? 'text-green-dark'
+            : 'text-red-dark'
+        }
+      />
       <MainMetrics statistic={statistic} />
-    </div>
+    </LayoutPag>
   )
 }

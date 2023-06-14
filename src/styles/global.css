@@ -5,10 +5,31 @@
 * {
   font-family: 'Nunito Sans', sans-serif;
 
-  transition: all 1s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 body {
   max-width: 1280px;
   margin: 0 auto;
+}
+
+input[type='date']::-webkit-inner-spin-button,
+input[type='date']::-webkit-calendar-picker-indicator {
+  display: none;
+  -webkit-appearance: none;
+}
+
+input[type='time']::-webkit-datetime-edit-ampm-field {
+  display: none;
+}
+input[type='time']::-webkit-clear-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  -ms-appearance: none;
+  appearance: none;
+  margin: -10px;
+}
+input[type='time']::-webkit-calendar-picker-indicator {
+  background: none;
 }

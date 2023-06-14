@@ -10,7 +10,7 @@ export const Profile = ({ avatarUrl }: ProfileProps) => {
       <img
         src={avatarUrl}
         alt=""
-        className="w-fit object-cover h-10 rounded-full border-2 border-gray-2"
+        className="h-10 w-fit rounded-full border-2 border-gray-2 object-cover"
       />
     </div>
   )

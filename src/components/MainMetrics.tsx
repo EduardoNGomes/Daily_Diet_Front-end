@@ -1,3 +1,5 @@
+import { Section } from './Section'
+
 interface MainMetricsProps {
   statistic: {
     allMeals: number
@@ -11,7 +13,7 @@ interface MainMetricsProps {
 
 export const MainMetrics = ({ statistic }: MainMetricsProps) => {
   return (
-    <main className="mt-5 bg-gray-7 rounded-t-3xl py-10 px-6 flex flex-col gap-2 items-center flex-1">
+    <Section>
       <h1 className="text-sm font-bold">Estatísticas gerais</h1>
       <div className="w-full rounded-lg p-4 bg-gray-6 flex flex-col gap-1 items-center">
         <h4 className="text-2xl text-gray-1 font-bold ">
@@ -47,6 +49,6 @@ export const MainMetrics = ({ statistic }: MainMetricsProps) => {
           </p>
         </div>
       </div>
-    </main>
+    </Section>
   )
 }
