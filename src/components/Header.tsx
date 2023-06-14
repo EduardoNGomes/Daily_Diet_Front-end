@@ -9,7 +9,7 @@ interface HeaderProps {
 export const Header = ({ title, subtitle, iconColor }: HeaderProps) => {
   return (
     <header className="flex flex-col items-center p-6">
-      <button className="self-start">
+      <button className={`self-start`}>
         <ArrowLeft size={24} className={iconColor} />
       </button>
       <div className="flex flex-col items-center">

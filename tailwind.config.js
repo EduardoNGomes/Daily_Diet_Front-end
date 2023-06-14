@@ -18,6 +18,7 @@ export default {
       'gray-5': '#DDDEDF',
       'gray-6': '#DDDEDF',
       'gray-7': '#FAFAFA',
+      overlay: 'rgba(0, 0, 0, 0.25)',
       transparent: 'RGBA(255,255,255,0)',
       white: '#fff'
     },
