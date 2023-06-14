@@ -8,7 +8,7 @@ export const New = () => {
     <LayoutPag color="bg-gray-5">
       <Header title="Nova refeição" iconColor="text-gray-2" />
       <Section>
-        <Form titleFunction="Cadastrar refeição" />
+        <Form state="create" />
       </Section>
     </LayoutPag>
   )
