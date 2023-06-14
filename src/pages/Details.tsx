@@ -61,6 +61,7 @@ export const Details = () => {
               title="Excluir refeição"
               onClick={handleClick}
               Icon={Trash}
+              color="white"
             />
           </Dialog.Trigger>
           <Dialog.Portal>
@@ -71,7 +72,11 @@ export const Details = () => {
               </Dialog.Title>
               <div className="flex gap-2">
                 <Dialog.Close asChild>
-                  <Button onClick={handleClick} title="Cancelar" />
+                  <Button
+                    onClick={handleClick}
+                    title="Cancelar"
+                    color="white"
+                  />
                 </Dialog.Close>
                 <Button onClick={handleClick} title="Sim, exluir" />
               </div>
