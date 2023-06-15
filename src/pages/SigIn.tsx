@@ -13,7 +13,7 @@ export const SignIn = () => {
       <img src={imgLogo} alt="" className="mx-auto h-28 w-28" />
 
       <Section>
-        <h1 className="text-xl font-bold text-gray-2">Acesse a aplicao</h1>
+        <h1 className="text-xl font-bold text-gray-2">Acesse a aplicação</h1>
         <FormLogin type="entry" />
         <button className="w-5/6 text-sm" onClick={handleBack}>
           crie sua conta
