@@ -5,6 +5,7 @@ import { formateDate } from '../utils/formateDate'
 import { Circle, PencilSimpleLine, Trash } from '@phosphor-icons/react'
 import { Button } from '../components/Button'
 import * as Dialog from '@radix-ui/react-dialog'
+import { useNavigate } from 'react-router-dom'
 
 const data = {
   id: '870170af-7572-402c-8837-9d7aaf3bee49',
@@ -17,10 +18,15 @@ const data = {
 }
 
 export const Details = () => {
+  const navigate = useNavigate()
   const handleClick = () => {
     console.log('Click')
   }
   const date = formateDate(data.updated_at)
+
+  const handlerChangePageToHome = (id: string) => {
+    navigate(`/edit/${id}`)
+  }
 
   console.log(date)
 
@@ -52,7 +58,7 @@ export const Details = () => {
         </div>
         <Button
           title="Editar refeição"
-          onClick={handleClick}
+          onClick={() => handlerChangePageToHome(data.id)}
           Icon={PencilSimpleLine}
         />
         <Dialog.Root>

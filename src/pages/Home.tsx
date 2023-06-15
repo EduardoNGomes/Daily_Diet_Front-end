@@ -6,6 +6,7 @@ import { Statistic } from '../components/Statistic'
 import perfil from '../assets/perfil.jpg'
 import { Button } from '../components/Button'
 import { AllMeals } from '../components/AllMeals'
+import { useNavigate } from 'react-router-dom'
 
 // simulate statisticUser
 const statistic = {
@@ -66,8 +67,10 @@ const response = [
 ]
 
 export const Home = () => {
-  const handlerChangePage = () => {
-    console.log('oi')
+  const navigate = useNavigate()
+
+  const handlerChangePageToNew = () => {
+    navigate('/new')
   }
 
   return (
@@ -85,7 +88,11 @@ export const Home = () => {
           Refeições
         </h3>
 
-        <Button title="Nova refeição" Icon={Plus} onClick={handlerChangePage} />
+        <Button
+          title="Nova refeição"
+          Icon={Plus}
+          onClick={handlerChangePageToNew}
+        />
       </div>
 
       {response.map((element) => (
