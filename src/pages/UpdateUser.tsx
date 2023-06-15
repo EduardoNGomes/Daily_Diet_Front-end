@@ -1,23 +1,22 @@
 import { LayoutPag } from '../components/LayoutPage'
 import { Section } from '../components/Section'
 
-import imgLogo from '../assets/Logo.svg'
 import { FormLogin } from '../components/FormLogin'
+import { Button } from '../components/Button'
+import { Header } from '../components/Header'
 
-export const SignIn = () => {
+export const UpdateUser = () => {
   const handleBack = () => {
     console.log('hi')
   }
   return (
-    <LayoutPag color="bg-green-dark">
-      <img src={imgLogo} alt="" className="mx-auto h-28 w-28" />
+    <LayoutPag color="bg-gray-5">
+      <Header title="Atualizar dados do usuario" iconColor="text-gray-1" />
 
       <Section>
         <h1 className="text-xl font-bold text-gray-2">Acesse a aplicação</h1>
-        <FormLogin type="entry" />
-        <button className="w-5/6 text-sm" onClick={handleBack}>
-          crie sua conta
-        </button>
+        <FormLogin type="update" />
+        <Button onClick={handleBack} title="cancelar" color="white" />
       </Section>
     </LayoutPag>
   )
