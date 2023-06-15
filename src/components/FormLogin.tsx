@@ -3,7 +3,7 @@ import { Button } from './Button'
 import { ChangeEvent, useState } from 'react'
 
 interface FormLoginProps {
-  type: 'create' | 'entry'
+  type: 'create' | 'entry' | 'update'
 }
 
 export const FormLogin = ({ type }: FormLoginProps) => {
@@ -11,6 +11,8 @@ export const FormLogin = ({ type }: FormLoginProps) => {
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
+  const [oldPassword, setOldPassword] = useState<string>('')
+  const [newPassword, setNewPassword] = useState<string>('')
 
   const handleImageSelect = (e: ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target
@@ -30,8 +32,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
     }
   }
   return (
-    <form className="flex w-5/6 flex-col gap-4">
-      {type === 'create' ? (
+    <form className="flex w-full flex-col gap-4">
+      {type === 'entry' ? (
+        ''
+      ) : (
         <div className="relative flex flex-col gap-1">
           <label
             htmlFor="image"
@@ -46,6 +50,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             className="hidden"
             placeholder="digite seu nome"
             onChange={handleImageSelect}
+            required={type === 'create'}
           />
           {imageSelected && (
             <img
@@ -55,11 +60,11 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             />
           )}
         </div>
-      ) : (
-        ''
       )}
 
-      {type === 'create' ? (
+      {type === 'entry' ? (
+        ''
+      ) : (
         <div className="relative flex flex-col gap-1">
           <label htmlFor="name" className="ml-1 text-sm font-bold text-gray-1">
             Nome:
@@ -73,10 +78,9 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             placeholder="digite seu nome"
             onChange={(e) => setName(e.target.value)}
             value={name}
+            required={type === 'create'}
           />
         </div>
-      ) : (
-        ''
       )}
 
       <div className="relative flex flex-col gap-1">
@@ -95,27 +99,82 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           placeholder="digite seu Email"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          required
         />
       </div>
 
-      <div className="relative flex flex-col gap-1">
-        <label
-          htmlFor="password"
-          className="ml-1 text-sm font-bold text-gray-1"
-        >
-          Senha:
-        </label>
-        <LockOpen size={18} className="absolute bottom-3 left-3 text-gray-3" />
-        <input
-          type="password"
-          name="password"
-          id="password"
-          className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
-          placeholder="digite sua senha"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
-        />
-      </div>
+      {type === 'update' ? (
+        <>
+          <div className="relative flex flex-col gap-1">
+            <label
+              htmlFor="oldPassword"
+              className="ml-1 text-sm font-bold text-gray-1"
+            >
+              Senha:
+            </label>
+            <LockOpen
+              size={18}
+              className="absolute bottom-3 left-3 text-gray-3"
+            />
+            <input
+              type="oldPassword"
+              name="oldPassword"
+              id="oldPassword"
+              className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
+              placeholder="digite sua senha"
+              onChange={(e) => setOldPassword(e.target.value)}
+              value={oldPassword}
+              required
+            />
+          </div>
+
+          <div className="relative flex flex-col gap-1">
+            <label
+              htmlFor="newPassword"
+              className="ml-1 text-sm font-bold text-gray-1"
+            >
+              Senha:
+            </label>
+            <LockOpen
+              size={18}
+              className="absolute bottom-3 left-3 text-gray-3"
+            />
+            <input
+              type="newPassword"
+              name="newPassword"
+              id="newPassword"
+              className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
+              placeholder="digite sua senha"
+              onChange={(e) => setNewPassword(e.target.value)}
+              value={newPassword}
+              required
+            />
+          </div>
+        </>
+      ) : (
+        <div className="relative flex flex-col gap-1">
+          <label
+            htmlFor="password"
+            className="ml-1 text-sm font-bold text-gray-1"
+          >
+            Senha:
+          </label>
+          <LockOpen
+            size={18}
+            className="absolute bottom-3 left-3 text-gray-3"
+          />
+          <input
+            type="password"
+            name="password"
+            id="password"
+            className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
+            placeholder="digite sua senha"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+            required
+          />
+        </div>
+      )}
 
       <Button onClick={handleClickButton} title="Entrar" />
     </form>
