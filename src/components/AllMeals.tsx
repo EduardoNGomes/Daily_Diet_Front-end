@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+
 interface DataResponseMealsProps {
   data: string
   items: {
@@ -16,6 +18,11 @@ interface AllMealsProps {
 }
 
 export const AllMeals = ({ AllMeals }: AllMealsProps) => {
+  const navigate = useNavigate()
+
+  const handlerChangePageToDetails = (id: string) => {
+    navigate(`/details/${id}`)
+  }
   return (
     <section className="flex flex-col gap-2">
       <h4 className="mb-1 text-lg font-bold text-gray-1">
@@ -24,6 +31,7 @@ export const AllMeals = ({ AllMeals }: AllMealsProps) => {
       {AllMeals.items.map((meal) => (
         <div
           key={meal.id}
+          onClick={() => handlerChangePageToDetails(meal.id)}
           className="flex w-full items-center gap-3 rounded border  border-gray-5 p-4"
         >
           <div className="border-r border-gray-4 pr-4 text-xs font-bold text-gray-1">
