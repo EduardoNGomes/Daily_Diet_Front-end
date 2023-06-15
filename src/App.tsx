@@ -5,11 +5,12 @@ import { Created } from './pages/Created'
 import { Details } from './pages/Details'
 import { Edit } from './pages/Edit'
 import { SignUp } from './pages/SigUp'
+import { SignIn } from './pages/SigIn'
 
 export const App = () => {
   return (
     <>
-      <SignUp />
+      <SignIn />
     </>
   )
 }
