@@ -1,17 +1,23 @@
 import { ArrowUpRight } from '@phosphor-icons/react'
+import { useNavigate } from 'react-router-dom'
 
 interface StatisticProps {
   percentage: string
 }
 
 export const Statistic = ({ percentage }: StatisticProps) => {
+  const navigate = useNavigate()
+
+  const handleToPageMetrics = () => {
+    navigate('/metrics')
+  }
   return (
     <div
       className={`flex w-full flex-col items-center gap-2 rounded px-2 pb-6   pt-2 ${
         Number(percentage) >= 50 ? 'bg-green-light' : 'bg-red-light'
       }`}
     >
-      <span className="self-end">
+      <span className="self-end" onClick={handleToPageMetrics}>
         <ArrowUpRight
           size={32}
           className={
