@@ -1,13 +1,18 @@
-import { EnvelopeSimple, LockOpen, User } from '@phosphor-icons/react'
-import { Button } from './Button'
 import { ChangeEvent, useState } from 'react'
+import { Button } from './Button'
+import { api } from '../lib/axios'
+import { EnvelopeSimple, LockOpen, User } from '@phosphor-icons/react'
+import { useNavigate } from 'react-router-dom'
 
 interface FormLoginProps {
   type: 'create' | 'entry' | 'update'
 }
 
 export const FormLogin = ({ type }: FormLoginProps) => {
+  const navigate = useNavigate()
   const [imageSelected, setImageSelected] = useState<string | null>(null)
+  const [avatarUrl, setAvatarUrl] = useState<FileList | null>(null)
+
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -22,13 +27,51 @@ export const FormLogin = ({ type }: FormLoginProps) => {
     }
 
     const previewURL = URL.createObjectURL(files[0])
+    setAvatarUrl(files)
     setImageSelected(previewURL)
   }
-  const handleClickButton = () => {
-    if (type === 'create') {
-      console.log('create')
-    } else {
-      console.log('entry')
+  const handleClickButton = async () => {
+    switch (type) {
+      case 'create': {
+        if (
+          email.length === 0 ||
+          password.length === 0 ||
+          name.length === 0 ||
+          imageSelected === null
+        ) {
+          return alert('Preencha todos os campos')
+        }
+
+        const form = new FormData()
+        form.append('name', name)
+        form.append('email', email)
+        form.append('password', password)
+        form.append('avatarImage', avatarUrl![0])
+        try {
+          const response = await api.post('/users', form)
+          alert(response.data)
+          navigate('/')
+          break
+        } catch (error) {
+          return console.log(error)
+        }
+      }
+      case 'entry': {
+        try {
+          await api.post('/auth', {
+            email,
+            password,
+          })
+          window.location.reload()
+        } catch (error) {
+          console.log(error)
+        }
+        break
+      }
+
+      default: {
+        console.log('hello')
+      }
     }
   }
   return (
@@ -50,7 +93,6 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             className="hidden"
             placeholder="digite seu nome"
             onChange={handleImageSelect}
-            required={type === 'create'}
           />
           {imageSelected && (
             <img
