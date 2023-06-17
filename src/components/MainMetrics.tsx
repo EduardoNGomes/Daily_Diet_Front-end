@@ -1,22 +1,16 @@
+import { StatisticsProps } from '../types/App-types'
 import { Section } from './Section'
 
 interface MainMetricsProps {
-  statistic: {
-    allMeals: number
-    mealsOnDiet: number
-    mealsOffDiet: number
-    dietSequence: number
-    percentageOnDiet: string
-    percentageOffDiet: string
-  }
+  statistic: StatisticsProps
 }
 
 export const MainMetrics = ({ statistic }: MainMetricsProps) => {
   return (
     <Section>
       <h1 className="text-sm font-bold">Estatísticas gerais</h1>
-      <div className="w-full rounded-lg p-4 bg-gray-6 flex flex-col gap-1 items-center">
-        <h4 className="text-2xl text-gray-1 font-bold ">
+      <div className="flex w-full flex-col items-center gap-1 rounded-lg bg-gray-6 p-4">
+        <h4 className="text-2xl font-bold text-gray-1 ">
           {statistic.dietSequence}
         </h4>
         <p className="text-sm text-gray-2">
@@ -24,27 +18,27 @@ export const MainMetrics = ({ statistic }: MainMetricsProps) => {
         </p>
       </div>
 
-      <div className="w-full rounded-lg p-4 bg-gray-6 flex flex-col gap-1 items-center">
-        <h4 className="text-2xl text-gray-1 font-bold ">
+      <div className="flex w-full flex-col items-center gap-1 rounded-lg bg-gray-6 p-4">
+        <h4 className="text-2xl font-bold text-gray-1 ">
           {statistic.allMeals}
         </h4>
         <p className="text-sm text-gray-2">refeições registradas</p>
       </div>
 
       <div className="flex gap-2">
-        <div className="w-full rounded-lg p-4 bg-green-light  flex flex-col gap-2 items-center">
-          <h4 className="text-2xl text-gray-1 font-bold ">
+        <div className="flex w-full flex-col items-center  gap-2 rounded-lg bg-green-light p-4">
+          <h4 className="text-2xl font-bold text-gray-1 ">
             {statistic.mealsOnDiet}
           </h4>
-          <p className="text-sm text-gray-2 text-center">
+          <p className="text-center text-sm text-gray-2">
             refeições dentro da dieta
           </p>
         </div>
-        <div className="w-full rounded-lg p-4 bg-red-light flex flex-col gap-2 items-center">
-          <h4 className="text-2xl text-gray-1 font-bold ">
+        <div className="flex w-full flex-col items-center gap-2 rounded-lg bg-red-light p-4">
+          <h4 className="text-2xl font-bold text-gray-1 ">
             {statistic.mealsOffDiet}
           </h4>
-          <p className="text-sm text-gray-2 text-center">
+          <p className="text-center text-sm text-gray-2">
             refeições fora da dieta
           </p>
         </div>

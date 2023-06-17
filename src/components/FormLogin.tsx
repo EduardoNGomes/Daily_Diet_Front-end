@@ -57,6 +57,9 @@ export const FormLogin = ({ type }: FormLoginProps) => {
         }
       }
       case 'entry': {
+        if (!email || !password) {
+          return alert('Preencha todos os campos')
+        }
         try {
           await api.post('/auth', {
             email,

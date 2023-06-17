@@ -2,7 +2,7 @@ import { ArrowUpRight } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 
 interface StatisticProps {
-  percentage: string
+  percentage: string | number
 }
 
 export const Statistic = ({ percentage }: StatisticProps) => {

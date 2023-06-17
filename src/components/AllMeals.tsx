@@ -1,16 +1,9 @@
 import { useNavigate } from 'react-router-dom'
+import { MealsProps } from '../types/App-types'
 
 interface DataResponseMealsProps {
   data: string
-  items: {
-    id: string
-    user_id: string
-    name: string
-    description: string
-    isOnDiet: boolean | number
-    created_at: string
-    updated_at: string
-  }[]
+  items: MealsProps[]
 }
 
 interface AllMealsProps {
