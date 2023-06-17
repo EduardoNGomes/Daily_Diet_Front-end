@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { Button } from './Button'
 import { ButtonForm } from './ButtonForm'
+import { api } from '../lib/axios'
+import { useNavigate } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 interface FormProps {
   state: 'create' | 'update'
@@ -16,16 +19,22 @@ interface FormProps {
 }
 
 export const Form = ({ state, data }: FormProps) => {
+  const [cookie] = useCookies(['token'])
+
   const [name, setName] = useState(data ? data.name : '')
   const [description, setDescription] = useState(data ? data.description : '')
   const [date, setDate] = useState(data ? data.updated_at.split(' ')[0] : '')
-  const [time, setTime] = useState('')
+  const [hour, setHour] = useState('')
+  const [minutes, setMinutes] = useState('')
+
   const [isOnDietActive, setIsOnDietActive] = useState(
     data?.isOnDiet === 1 || false,
   )
   const [isOffDietActive, setIsOffDietActive] = useState(
     data?.isOnDiet === 0 || false,
   )
+
+  const navigate = useNavigate()
 
   const handleONActive = () => {
     setIsOnDietActive((prevState) => !prevState)
@@ -36,18 +45,42 @@ export const Form = ({ state, data }: FormProps) => {
     setIsOnDietActive(false)
   }
 
-  const handleSubmit = () => {
-    if (!name || !description) {
-      return console.log('aler')
+  const handleSubmit = async () => {
+    switch (state) {
+      case 'create': {
+        if (!name || !description || !hour || !minutes) {
+          return alert('Preencha todos os campos')
+        }
+        try {
+          const response = await api.post(
+            '/meals',
+            {
+              name,
+              description,
+              isOnDiet: isOnDietActive ? true : isOffDietActive ? false : '',
+              created_at: date + ' ' + hour + ':' + minutes,
+              updated_at: date + ' ' + hour + ':' + minutes,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${cookie.token}`,
+              },
+            },
+          )
+          alert(response.data)
+          navigate('/')
+        } catch (error) {
+          console.log(error)
+        }
+        break
+      }
+      case 'update': {
+        break
+      }
+      default: {
+        console.log('invalid state')
+      }
     }
-    if (isOnDietActive === false && isOffDietActive === false) {
-      return console.log('onDietActive')
-    }
-    console.log(
-      `Nome: ${name}
-       Description: ${description}
-       IsOnDiet: ${isOnDietActive ? 1 : isOffDietActive ? 0 : ''}`,
-    )
   }
 
   return (
@@ -94,14 +127,26 @@ export const Form = ({ state, data }: FormProps) => {
           <label htmlFor="time" className="text-sm font-bold text-gray-2">
             Hora
           </label>
-          <input
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            type="time"
-            id="time"
-            className="w-full rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1"
-            placeholder="hh:mm"
-          />
+
+          <div className="flex w-fit items-center justify-center rounded-md border border-gray-5 p-1">
+            <input
+              value={hour}
+              onChange={(e) => setHour(e.target.value)}
+              type="text"
+              id="hour"
+              className="w-full bg-gray-7 p-2 text-right text-base font-normal text-gray-1 focus:outline-none"
+              placeholder="hh:"
+            />
+            <span className="w-4 bg-gray-7 text-lg font-bold">:</span>
+            <input
+              value={minutes}
+              onChange={(e) => setMinutes(e.target.value)}
+              type="text"
+              id="minutes"
+              className="w-full bg-gray-7 p-2 text-left text-base font-normal text-gray-1 focus:outline-none"
+              placeholder="mm"
+            />
+          </div>
         </div>
       </div>
 
