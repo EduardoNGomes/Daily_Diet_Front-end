@@ -16,3 +16,8 @@ export interface MealsProps {
   created_at: string
   updated_at: string
 }
+export interface UserProps {
+  avatarUrl: string
+  email: string
+  name: string
+}

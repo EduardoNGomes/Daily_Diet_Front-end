@@ -1,17 +1,31 @@
+import { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import { LayoutPag } from '../components/LayoutPage'
 import { MainMetrics } from '../components/MainMetrics'
-
-const statistic = {
-  allMeals: 4,
-  mealsOnDiet: 2,
-  mealsOffDiet: 2,
-  dietSequence: 1,
-  percentageOnDiet: '50.00',
-  percentageOffDiet: '50.00',
-}
+import { StatisticsProps } from '../types/App-types'
+import { api } from '../lib/axios'
+import { useCookies } from 'react-cookie'
 
 export const Metrics = () => {
+  const [statistic, setStatistic] = useState({} as StatisticsProps)
+  const [cookie] = useCookies(['token'])
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await api.get('statistic', {
+          headers: {
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        })
+
+        setStatistic(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData()
+  }, [cookie])
   return (
     <LayoutPag
       color={
