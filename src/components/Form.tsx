@@ -68,7 +68,11 @@ export const Form = ({ state, data }: FormProps) => {
             },
           )
           alert(response.data)
-          navigate('/')
+          navigate(
+            `/created?type=${
+              isOnDietActive ? true : isOffDietActive ? false : ''
+            } `,
+          )
         } catch (error) {
           console.log(error)
         }
