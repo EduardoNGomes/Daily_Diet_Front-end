@@ -59,7 +59,7 @@ export const Home = () => {
 
   return (
     <main className="flex flex-col gap-10 p-6 ">
-      <Profile avatarUrl={user.avatarUrl} />
+      <Profile avatarUrl={user.avatarUrl} name={user.name} />
       <Statistic
         percentage={
           Number(statistic.percentageOnDiet) >= 50
