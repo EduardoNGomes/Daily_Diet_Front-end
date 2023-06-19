@@ -5,40 +5,71 @@ import { formateDate } from '../utils/formateDate'
 import { Circle, PencilSimpleLine, Trash } from '@phosphor-icons/react'
 import { Button } from '../components/Button'
 import * as Dialog from '@radix-ui/react-dialog'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useCookies } from 'react-cookie'
 
-const data = {
-  id: '870170af-7572-402c-8837-9d7aaf3bee49',
-  user_id: '17e815c6-79d2-4c6c-b8ae-e6357a2874d2',
-  name: 'Frango grelhado',
-  description: '200g de peito de frango grelhado',
-  isOnDiet: 1,
-  created_at: '2023-06-09 21:35:13',
-  updated_at: '2023-06-09 21:35:13',
-}
+import { api } from '../lib/axios'
+import { MealsProps } from '../types/App-types'
 
 export const Details = () => {
+  const [meal, setMeal] = useState({} as MealsProps)
+  const [cookie] = useCookies(['token'])
+
+  const params = useParams()
   const navigate = useNavigate()
-  const handleClick = () => {
-    console.log('Click')
+
+  let date
+  if (meal.updated_at) {
+    date = formateDate(meal.updated_at)
   }
-  const date = formateDate(data.updated_at)
 
   const handlerChangePageToHome = (id: string) => {
     navigate(`/edit/${id}`)
   }
 
-  console.log(date)
+  const handleFakeClick = async () => {
+    console.log('fake click')
+  }
 
+  const handleDeleteFood = async () => {
+    try {
+      const response = await api.delete(`/meals/${params.id}`, {
+        headers: {
+          Authorization: `Bearer ${cookie.token}`,
+        },
+      })
+      alert(response.data)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        const response = await api.get(`/meals/${params.id}`, {
+          headers: {
+            Authorization: `Bearer ${cookie.token}`,
+          },
+        })
+        setMeal(response.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getData()
+  }, [cookie, params])
   return (
-    <LayoutPag color={data.isOnDiet === 1 ? 'bg-green-light' : 'bg-red-light'}>
+    <LayoutPag color={meal.isOnDiet === 1 ? 'bg-green-light' : 'bg-red-light'}>
       <Header title="Refeição" iconColor="text-gray-2" />
       <Section>
         <div className="flex flex-1 flex-col items-start gap-6 self-start">
           <div className="flex flex-col gap-2">
-            <p className="text-xl font-bold text-gray-1">{data.name}</p>
+            <p className="text-xl font-bold text-gray-1">{meal.name}</p>
             <p className="text-base font-normal text-gray-2">
-              {data.description}
+              {meal.description}
             </p>
           </div>
           <div className="flex flex-col gap-2">
@@ -50,22 +81,22 @@ export const Details = () => {
               weight="fill"
               size={10}
               className={`${
-                data.isOnDiet === 1 ? 'text-green-dark' : 'text-red-dark'
+                meal.isOnDiet === 1 ? 'text-green-dark' : 'text-red-dark'
               }`}
             />
-            {data.isOnDiet === 1 ? 'dentro da dieta' : 'fora da dieta'}
+            {meal.isOnDiet === 1 ? 'dentro da dieta' : 'fora da dieta'}
           </p>
         </div>
         <Button
           title="Editar refeição"
-          onClick={() => handlerChangePageToHome(data.id)}
+          onClick={() => handlerChangePageToHome(meal.id)}
           Icon={PencilSimpleLine}
         />
         <Dialog.Root>
           <Dialog.Trigger asChild>
             <Button
               title="Excluir refeição"
-              onClick={handleClick}
+              onClick={handleFakeClick}
               Icon={Trash}
               color="white"
             />
@@ -79,12 +110,12 @@ export const Details = () => {
               <div className="flex gap-2">
                 <Dialog.Close asChild>
                   <Button
-                    onClick={handleClick}
+                    onClick={handleFakeClick}
                     title="Cancelar"
                     color="white"
                   />
                 </Dialog.Close>
-                <Button onClick={handleClick} title="Sim, exluir" />
+                <Button onClick={handleDeleteFood} title="Sim, exluir" />
               </div>
             </Dialog.Content>
           </Dialog.Portal>

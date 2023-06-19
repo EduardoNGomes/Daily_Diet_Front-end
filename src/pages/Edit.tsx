@@ -1,24 +1,35 @@
+import { useEffect, useState } from 'react'
 import { Form } from '../components/Form'
 import { Header } from '../components/Header'
 import { LayoutPag } from '../components/LayoutPage'
 import { Section } from '../components/Section'
-
-const dataTest = {
-  id: '870170af-7572-402c-8837-9d7aaf3bee49',
-  user_id: '17e815c6-79d2-4c6c-b8ae-e6357a2874d2',
-  name: 'Frango grelhado',
-  description: '200g de peito de frango grelhado',
-  isOnDiet: 1,
-  created_at: '2023-06-09 21:35:13',
-  updated_at: '2023-06-09 21:35:13',
-}
+import { MealsProps } from '../types/App-types'
+import { useCookies } from 'react-cookie'
+import { api } from '../lib/axios'
+import { useParams } from 'react-router-dom'
 
 export const Edit = () => {
+  const [meal, setMeal] = useState({} as MealsProps)
+  const params = useParams()
+  const [cookie] = useCookies(['token'])
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await api.get(`/meals/${params.id}`, {
+        headers: { Authorization: `Bearer ${cookie.token}` },
+      })
+
+      setMeal(response.data)
+    }
+
+    getData()
+  }, [cookie, params])
+
   return (
     <LayoutPag color="bg-gray-5">
       <Header title="Nova refeição" iconColor="text-gray-2" />
       <Section>
-        <Form state="update" data={dataTest} />
+        <Form state="update" data={meal} />
       </Section>
     </LayoutPag>
   )

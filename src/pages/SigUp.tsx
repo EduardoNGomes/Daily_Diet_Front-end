@@ -3,10 +3,12 @@ import { Section } from '../components/Section'
 
 import imgLogo from '../assets/Logo.svg'
 import { FormLogin } from '../components/FormLogin'
+import { useNavigate } from 'react-router-dom'
 
 export const SignUp = () => {
+  const navigate = useNavigate()
   const handleBack = () => {
-    console.log('hi')
+    navigate('/')
   }
   return (
     <LayoutPag color="bg-green-dark">

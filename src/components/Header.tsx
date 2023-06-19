@@ -1,5 +1,7 @@
 import { ArrowLeft } from '@phosphor-icons/react'
 
+import { useNavigate } from 'react-router-dom'
+
 interface HeaderProps {
   title: string
   subtitle?: string
@@ -7,9 +9,15 @@ interface HeaderProps {
 }
 
 export const Header = ({ title, subtitle, iconColor }: HeaderProps) => {
+  const navigate = useNavigate()
+
+  const handleBack = () => {
+    navigate('/')
+  }
+
   return (
     <header className="flex flex-col items-center p-6">
-      <button className={`self-start`}>
+      <button className={`self-start`} onClick={handleBack}>
         <ArrowLeft size={24} className={iconColor} />
       </button>
       <div className="flex flex-col items-center">

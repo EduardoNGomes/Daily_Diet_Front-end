@@ -1,13 +1,21 @@
-import { EnvelopeSimple, LockOpen, User } from '@phosphor-icons/react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Button } from './Button'
-import { ChangeEvent, useState } from 'react'
+import { api } from '../lib/axios'
+import { EnvelopeSimple, LockOpen, User } from '@phosphor-icons/react'
+import { useNavigate } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 interface FormLoginProps {
   type: 'create' | 'entry' | 'update'
 }
 
 export const FormLogin = ({ type }: FormLoginProps) => {
+  const [cookie] = useCookies(['token'])
+  const navigate = useNavigate()
+
   const [imageSelected, setImageSelected] = useState<string | null>(null)
+  const [avatarUrl, setAvatarUrl] = useState<FileList | null>(null)
+
   const [name, setName] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -22,15 +30,106 @@ export const FormLogin = ({ type }: FormLoginProps) => {
     }
 
     const previewURL = URL.createObjectURL(files[0])
+    setAvatarUrl(files)
     setImageSelected(previewURL)
   }
-  const handleClickButton = () => {
-    if (type === 'create') {
-      console.log('create')
-    } else {
-      console.log('entry')
+  const handleClickButton = async () => {
+    switch (type) {
+      case 'create': {
+        if (
+          email.length === 0 ||
+          password.length === 0 ||
+          name.length === 0 ||
+          imageSelected === null
+        ) {
+          return alert('Preencha todos os campos')
+        }
+
+        const form = new FormData()
+        form.append('name', name)
+        form.append('email', email)
+        form.append('password', password)
+        form.append('avatarImage', avatarUrl![0])
+        try {
+          const response = await api.post('/users', form)
+          alert(response.data)
+          navigate('/')
+          break
+        } catch (error) {
+          return console.log(error)
+        }
+      }
+      case 'entry': {
+        if (!email || !password) {
+          return alert('Preencha todos os campos')
+        }
+        try {
+          await api.post('/auth', {
+            email,
+            password,
+          })
+          window.location.reload()
+        } catch (error) {
+          console.log(error)
+        }
+        break
+      }
+      case 'update': {
+        if (
+          email.length === 0 ||
+          oldPassword.length === 0 ||
+          newPassword.length === 0 ||
+          name.length === 0
+        ) {
+          return alert('Preencha todos os campos')
+        }
+
+        const form = new FormData()
+        form.append('name', name)
+        form.append('email', email)
+        form.append('newPassword', newPassword)
+        form.append('oldPassword', oldPassword)
+
+        if (avatarUrl) {
+          form.append('avatarImage', avatarUrl![0])
+        }
+        try {
+          const response = await api.put('/users', form, {
+            headers: { Authorization: `Bearer ${cookie.token}` },
+          })
+          alert(response.data)
+          navigate('/')
+          break
+        } catch (error) {
+          return console.log(error)
+        }
+      }
+      default: {
+        console.log('hello')
+      }
     }
   }
+
+  useEffect(() => {
+    const getDate = async () => {
+      try {
+        const response = await api.get('/users', {
+          headers: { Authorization: `Bearer ${cookie.token}` },
+        })
+
+        setName(response.data.name)
+        setEmail(response.data.email)
+        setImageSelected(
+          `${api.defaults.baseURL}/users/avatar/${response.data.avatarUrl}`,
+        )
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    if (type === 'update') {
+      getDate()
+    }
+  }, [cookie, type])
   return (
     <form className="flex w-full flex-col gap-4">
       {type === 'entry' ? (
@@ -50,7 +149,6 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             className="hidden"
             placeholder="digite seu nome"
             onChange={handleImageSelect}
-            required={type === 'create'}
           />
           {imageSelected && (
             <img
@@ -110,14 +208,14 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               htmlFor="oldPassword"
               className="ml-1 text-sm font-bold text-gray-1"
             >
-              Senha:
+              Senha antiga:
             </label>
             <LockOpen
               size={18}
               className="absolute bottom-3 left-3 text-gray-3"
             />
             <input
-              type="oldPassword"
+              type="password"
               name="oldPassword"
               id="oldPassword"
               className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
@@ -133,14 +231,14 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               htmlFor="newPassword"
               className="ml-1 text-sm font-bold text-gray-1"
             >
-              Senha:
+              Nova senha:
             </label>
             <LockOpen
               size={18}
               className="absolute bottom-3 left-3 text-gray-3"
             />
             <input
-              type="newPassword"
+              type="password"
               name="newPassword"
               id="newPassword"
               className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
