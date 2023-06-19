@@ -22,17 +22,14 @@ interface FormProps {
 
 export const Form = ({ state, data }: FormProps) => {
   const [cookie] = useCookies(['token'])
+
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
 
-  const [isOnDietActive, setIsOnDietActive] = useState(
-    data?.isOnDiet === 1 || false,
-  )
-  const [isOffDietActive, setIsOffDietActive] = useState(
-    data?.isOnDiet === 0 || false,
-  )
+  const [isOnDietActive, setIsOnDietActive] = useState(false)
+  const [isOffDietActive, setIsOffDietActive] = useState(false)
 
   const navigate = useNavigate()
 
@@ -46,11 +43,14 @@ export const Form = ({ state, data }: FormProps) => {
   }
 
   const handleSubmit = async () => {
+    if (!name || !description || !date || !time) {
+      return alert('Preencha todos os campos')
+    }
+    if (!isOnDietActive && !isOffDietActive) {
+      return alert('Informe se está dentro ou fora da dieta')
+    }
     switch (state) {
       case 'create': {
-        if (!name || !description || !date || !time) {
-          return alert('Preencha todos os campos')
-        }
         try {
           const response = await api.post(
             '/meals',
@@ -79,6 +79,28 @@ export const Form = ({ state, data }: FormProps) => {
         break
       }
       case 'update': {
+        try {
+          const response = await api.put(
+            `/meals/${data?.id}`,
+            {
+              name,
+              description,
+              isOnDiet: isOnDietActive ? true : isOffDietActive ? false : '',
+              created_at: date + ' ' + time,
+              updated_at: date + ' ' + time,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${cookie.token}`,
+              },
+            },
+          )
+          alert(response.data)
+          navigate(`/`)
+        } catch (error) {
+          console.log(error)
+        }
+
         break
       }
       default: {
@@ -89,11 +111,17 @@ export const Form = ({ state, data }: FormProps) => {
 
   useEffect(() => {
     if (data) {
-      const date = data.updated_at ? separateDate(data.updated_at) : ''
+      if (data.name) {
+        const date = separateDate(data.updated_at)
 
-      setDate(date[0])
+        setDate(date[0])
+        setTime(date[1])
 
-      setTime(date[1])
+        setName(data.name)
+        setDescription(data.description)
+        setIsOnDietActive(data.isOnDiet === 1 || false)
+        setIsOffDietActive(data.isOnDiet === 0 || false)
+      }
     }
   }, [data])
 
