@@ -17,12 +17,12 @@ export const Statistic = ({ percentage }: StatisticProps) => {
         Number(percentage) >= 50 ? 'bg-green-light' : 'bg-red-light'
       }`}
     >
-      <span className="self-end" onClick={handleToPageMetrics}>
+      <span className="cursor-pointer self-end" onClick={handleToPageMetrics}>
         <ArrowUpRight
           size={32}
-          className={
-            Number(percentage) >= 50 ? 'text-green-dark' : 'text-red-dark'
-          }
+          className={`hover:brightness-150
+            ${Number(percentage) >= 50 ? 'text-green-dark ' : 'text-red-dark'}
+          `}
         />
       </span>
       <h2 className="text-5xl font-bold leading-10 text-gray-1">

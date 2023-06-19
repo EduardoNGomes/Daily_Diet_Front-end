@@ -1,9 +1,11 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button } from './Button'
 import { ButtonForm } from './ButtonForm'
 import { api } from '../lib/axios'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import InputMask from 'react-input-mask'
+import { separateDate } from '../utils/separateDate'
 
 interface FormProps {
   state: 'create' | 'update'
@@ -20,12 +22,10 @@ interface FormProps {
 
 export const Form = ({ state, data }: FormProps) => {
   const [cookie] = useCookies(['token'])
-
-  const [name, setName] = useState(data ? data.name : '')
-  const [description, setDescription] = useState(data ? data.description : '')
-  const [date, setDate] = useState(data ? data.updated_at.split(' ')[0] : '')
-  const [hour, setHour] = useState('')
-  const [minutes, setMinutes] = useState('')
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [date, setDate] = useState('')
+  const [time, setTime] = useState('')
 
   const [isOnDietActive, setIsOnDietActive] = useState(
     data?.isOnDiet === 1 || false,
@@ -48,7 +48,7 @@ export const Form = ({ state, data }: FormProps) => {
   const handleSubmit = async () => {
     switch (state) {
       case 'create': {
-        if (!name || !description || !hour || !minutes) {
+        if (!name || !description || !date || !time) {
           return alert('Preencha todos os campos')
         }
         try {
@@ -58,8 +58,8 @@ export const Form = ({ state, data }: FormProps) => {
               name,
               description,
               isOnDiet: isOnDietActive ? true : isOffDietActive ? false : '',
-              created_at: date + ' ' + hour + ':' + minutes,
-              updated_at: date + ' ' + hour + ':' + minutes,
+              created_at: date + ' ' + time,
+              updated_at: date + ' ' + time,
             },
             {
               headers: {
@@ -87,6 +87,16 @@ export const Form = ({ state, data }: FormProps) => {
     }
   }
 
+  useEffect(() => {
+    if (data) {
+      const date = data.updated_at ? separateDate(data.updated_at) : ''
+
+      setDate(date[0])
+
+      setTime(date[1])
+    }
+  }, [data])
+
   return (
     <form className="flex w-full flex-col gap-3">
       <div className="flex flex-col gap-2">
@@ -94,19 +104,19 @@ export const Form = ({ state, data }: FormProps) => {
           Nome
         </label>
         <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
           type="text"
           id="name"
+          onChange={(e) => setName(e.target.value)}
+          value={name}
           className="w-full rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1"
         />
       </div>
       <div className="flex flex-col gap-2">
         <label htmlFor="description">Descrição</label>
         <textarea
-          value={description}
           onChange={(e) => setDescription(e.target.value)}
-          name=""
+          value={description}
+          name="description"
           id="description"
           className="h-14 w-full resize-none rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1 "
         />
@@ -117,12 +127,13 @@ export const Form = ({ state, data }: FormProps) => {
           <label htmlFor="data" className="text-sm font-bold text-gray-2">
             Data
           </label>
-          <input
-            value={date}
+          <InputMask
+            mask="99/99/9999"
             onChange={(e) => setDate(e.target.value)}
-            type="date"
+            value={date}
             id="data"
-            className="w-full rounded-md border border-gray-5 p-3 text-base font-normal text-gray-1"
+            name="data"
+            className="w-full rounded-md border border-gray-5 p-3 text-center text-base font-normal text-gray-1"
             placeholder="dd/mm/yyyy"
           />
         </div>
@@ -131,26 +142,16 @@ export const Form = ({ state, data }: FormProps) => {
           <label htmlFor="time" className="text-sm font-bold text-gray-2">
             Hora
           </label>
-
-          <div className="flex w-fit items-center justify-center rounded-md border border-gray-5 p-1">
-            <input
-              value={hour}
-              onChange={(e) => setHour(e.target.value)}
-              type="text"
-              id="hour"
-              className="w-full bg-gray-7 p-2 text-right text-base font-normal text-gray-1 focus:outline-none"
-              placeholder="hh:"
-            />
-            <span className="w-4 bg-gray-7 text-lg font-bold">:</span>
-            <input
-              value={minutes}
-              onChange={(e) => setMinutes(e.target.value)}
-              type="text"
-              id="minutes"
-              className="w-full bg-gray-7 p-2 text-left text-base font-normal text-gray-1 focus:outline-none"
-              placeholder="mm"
-            />
-          </div>
+          <InputMask
+            type="text"
+            mask="99:99"
+            onChange={(e) => setTime(e.target.value)}
+            value={time}
+            id="hour"
+            name="hour"
+            className="w-full rounded-md border border-gray-5 p-3 text-center text-base font-normal text-gray-1"
+            placeholder="hh:mm"
+          />
         </div>
       </div>
 

@@ -25,7 +25,7 @@ export const AllMeals = ({ AllMeals }: AllMealsProps) => {
         <div
           key={meal.id}
           onClick={() => handlerChangePageToDetails(meal.id)}
-          className="flex w-full items-center gap-3 rounded border  border-gray-5 p-4"
+          className="flex w-full cursor-pointer items-center gap-3 rounded  border border-gray-5 p-4 hover:brightness-50"
         >
           <div className="border-r border-gray-4 pr-4 text-xs font-bold text-gray-1">
             {meal.updated_at.split(' ')[1].split(':')[0]}:{' '}

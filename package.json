@@ -12,11 +12,13 @@
   "dependencies": {
     "@phosphor-icons/react": "^2.0.9",
     "@radix-ui/react-dialog": "^1.0.4",
+    "@types/react-input-mask": "^3.0.2",
     "axios": "^1.4.0",
     "eslint-plugin-tailwindcss": "^3.12.1",
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
+    "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.13.0"
   },
   "devDependencies": {
