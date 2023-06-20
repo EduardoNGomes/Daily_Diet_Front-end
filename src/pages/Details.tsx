@@ -17,6 +17,8 @@ export const Details = () => {
   const [meal, setMeal] = useState({} as MealsProps)
   const [cookie] = useCookies(['token'])
 
+  const [buttonDisabled, setButtonDisabled] = useState(false)
+
   const params = useParams()
   const navigate = useNavigate()
 
@@ -34,6 +36,7 @@ export const Details = () => {
   }
 
   const handleDeleteFood = async () => {
+    setButtonDisabled(true)
     try {
       const response = await api.delete(`/meals/${params.id}`, {
         headers: {
@@ -45,6 +48,7 @@ export const Details = () => {
       navigate('/')
     } catch (error) {
       console.log(error)
+      setButtonDisabled(false)
     }
   }
 
@@ -117,7 +121,11 @@ export const Details = () => {
                     color="white"
                   />
                 </Dialog.Close>
-                <Button onClick={handleDeleteFood} title="Sim, exluir" />
+                <Button
+                  onClick={handleDeleteFood}
+                  title="Sim, exluir"
+                  disabled={buttonDisabled}
+                />
                 <ToastContainer />
               </div>
             </Dialog.Content>

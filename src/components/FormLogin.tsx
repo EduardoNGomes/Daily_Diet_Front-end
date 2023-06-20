@@ -14,6 +14,8 @@ export const FormLogin = ({ type }: FormLoginProps) => {
   const [cookie] = useCookies(['token'])
   const navigate = useNavigate()
 
+  const [buttonDisabled, setButtonDisabled] = useState(false)
+
   const [imageSelected, setImageSelected] = useState<string | null>(null)
   const [avatarUrl, setAvatarUrl] = useState<FileList | null>(null)
 
@@ -35,6 +37,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
     setImageSelected(previewURL)
   }
   const handleClickButton = async () => {
+    setButtonDisabled(true)
     switch (type) {
       case 'create': {
         if (
@@ -43,6 +46,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           name.length === 0 ||
           imageSelected === null
         ) {
+          setButtonDisabled(false)
           return toast.warn('Preencha todos os campos', {
             autoClose: 3000,
             theme: 'dark',
@@ -58,13 +62,16 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           const response = await api.post('/users', form)
           toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate('/')
-          break
         } catch (error) {
-          return console.log(error)
+          setButtonDisabled(false)
+          console.log(error)
         }
+        break
       }
       case 'entry': {
         if (!email || !password) {
+          setButtonDisabled(false)
+
           return toast.warn('Preencha todos os campos', {
             autoClose: 3000,
             theme: 'dark',
@@ -77,6 +84,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           })
           window.location.reload()
         } catch (error) {
+          setButtonDisabled(false)
           console.log(error)
         }
         break
@@ -88,6 +96,8 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           newPassword.length === 0 ||
           name.length === 0
         ) {
+          setButtonDisabled(false)
+
           return toast.warn('Preencha todos os campos', {
             autoClose: 3000,
             theme: 'dark',
@@ -109,10 +119,12 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           })
           toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate('/')
-          break
         } catch (error) {
-          return console.log(error)
+          setButtonDisabled(false)
+
+          console.log(error)
         }
+        break
       }
       default: {
         console.log('invalid type')
@@ -284,7 +296,11 @@ export const FormLogin = ({ type }: FormLoginProps) => {
         </div>
       )}
 
-      <Button onClick={handleClickButton} title="Entrar" />
+      <Button
+        onClick={handleClickButton}
+        title="Entrar"
+        disabled={buttonDisabled}
+      />
       <ToastContainer />
     </form>
   )

@@ -24,6 +24,8 @@ interface FormProps {
 export const Form = ({ state, data }: FormProps) => {
   const [cookie] = useCookies(['token'])
 
+  const [buttonDisabled, setButtonDisabled] = useState(false)
+
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
@@ -44,13 +46,17 @@ export const Form = ({ state, data }: FormProps) => {
   }
 
   const handleSubmit = async () => {
+    setButtonDisabled(true)
     if (!name || !description || !date || !time) {
+      setButtonDisabled(false)
+
       return toast.warn('Preencha todos os campos', {
         autoClose: 3000,
         theme: 'dark',
       })
     }
     if (!isOnDietActive && !isOffDietActive) {
+      setButtonDisabled(false)
       return toast('Informe se está dentro ou fora da dieta')
     }
     switch (state) {
@@ -79,6 +85,7 @@ export const Form = ({ state, data }: FormProps) => {
           )
         } catch (error) {
           console.log(error)
+          setButtonDisabled(false)
         }
         break
       }
@@ -103,6 +110,7 @@ export const Form = ({ state, data }: FormProps) => {
           navigate(`/`)
         } catch (error) {
           console.log(error)
+          setButtonDisabled(false)
         }
 
         break
@@ -206,6 +214,7 @@ export const Form = ({ state, data }: FormProps) => {
       <Button
         title={state === 'create' ? 'Cadastrar refeição' : 'Salvar alterações'}
         onClick={handleSubmit}
+        disabled={buttonDisabled}
       />
       <ToastContainer />
     </form>
