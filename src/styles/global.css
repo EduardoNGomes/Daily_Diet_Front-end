@@ -8,3 +8,33 @@
 button {
   transition: all 0.4s ease-in-out;
 }
+
+.animation {
+  position: relative;
+  top: -100px; /* Posição inicial fora da tela */
+  animation-name: down;
+  animation-duration: 2s;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes down {
+  0% {
+    top: 100px;
+    transform: translateY(-200%);
+  }
+  25% {
+    top: 0;
+    transform: translateY(0);
+  }
+  50% {
+    transform: rotate(20deg);
+  }
+  80% {
+    transform: rotate(-20deg);
+  }
+  100% {
+    top: 0;
+    transform: translateX(0);
+  }
+}

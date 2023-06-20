@@ -12,7 +12,7 @@ export const SignIn = () => {
   }
   return (
     <LayoutPag color="bg-green-dark">
-      <img src={imgLogo} alt="" className="mx-auto h-28 w-28" />
+      <img src={imgLogo} alt="" className="animation mx-auto h-28 w-28" />
 
       <Section>
         <h1 className="text-xl font-bold text-gray-2">Acesse a aplicação</h1>
