@@ -17,7 +17,10 @@ export const SignIn = () => {
       <Section>
         <h1 className="text-xl font-bold text-gray-2">Acesse a aplicação</h1>
         <FormLogin type="entry" />
-        <button className="w-5/6 text-sm" onClick={handleSignUp}>
+        <button
+          className="w-fit  p-2 text-sm font-bold hover:text-gray-3"
+          onClick={handleSignUp}
+        >
           crie sua conta
         </button>
       </Section>

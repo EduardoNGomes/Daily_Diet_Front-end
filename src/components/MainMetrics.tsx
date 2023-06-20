@@ -25,7 +25,7 @@ export const MainMetrics = ({ statistic }: MainMetricsProps) => {
         <p className="text-sm text-gray-2">refeições registradas</p>
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-2 md:w-full">
         <div className="flex w-full flex-col items-center  gap-2 rounded-lg bg-green-light p-4">
           <h4 className="text-2xl font-bold text-gray-1 ">
             {statistic.mealsOnDiet}

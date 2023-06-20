@@ -162,8 +162,8 @@ export const Form = ({ state, data }: FormProps) => {
         />
       </div>
 
-      <div className="flex  gap-2">
-        <div>
+      <div className="flex  gap-2 md:w-full">
+        <div className="md:w-full">
           <label htmlFor="data" className="text-sm font-bold text-gray-2">
             Data
           </label>
@@ -178,7 +178,7 @@ export const Form = ({ state, data }: FormProps) => {
           />
         </div>
 
-        <div>
+        <div className="md:w-full">
           <label htmlFor="time" className="text-sm font-bold text-gray-2">
             Hora
           </label>

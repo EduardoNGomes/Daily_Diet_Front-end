@@ -58,7 +58,7 @@ export const Home = () => {
   }, [cookie])
 
   return (
-    <main className="flex flex-col gap-10 p-6 ">
+    <main className="flex max-w-5xl flex-col gap-10 p-6 md:mx-auto">
       <Profile avatarUrl={user.avatarUrl} name={user.name} />
       <Statistic
         percentage={
