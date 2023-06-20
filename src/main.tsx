@@ -1,5 +1,6 @@
 import ReactDOM from 'react-dom/client'
 import './styles/global.css'
+import 'react-toastify/dist/ReactToastify.css'
 import { CookiesProvider } from 'react-cookie'
 import { Routes } from './routes/index.tsx'
 

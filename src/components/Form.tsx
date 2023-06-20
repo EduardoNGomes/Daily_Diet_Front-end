@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import InputMask from 'react-input-mask'
 import { separateDate } from '../utils/separateDate'
+import { ToastContainer, toast } from 'react-toastify'
 
 interface FormProps {
   state: 'create' | 'update'
@@ -44,10 +45,13 @@ export const Form = ({ state, data }: FormProps) => {
 
   const handleSubmit = async () => {
     if (!name || !description || !date || !time) {
-      return alert('Preencha todos os campos')
+      return toast.warn('Preencha todos os campos', {
+        autoClose: 3000,
+        theme: 'dark',
+      })
     }
     if (!isOnDietActive && !isOffDietActive) {
-      return alert('Informe se está dentro ou fora da dieta')
+      return toast('Informe se está dentro ou fora da dieta')
     }
     switch (state) {
       case 'create': {
@@ -67,7 +71,7 @@ export const Form = ({ state, data }: FormProps) => {
               },
             },
           )
-          alert(response.data)
+          toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate(
             `/created?type=${
               isOnDietActive ? true : isOffDietActive ? false : ''
@@ -95,7 +99,7 @@ export const Form = ({ state, data }: FormProps) => {
               },
             },
           )
-          alert(response.data)
+          toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate(`/`)
         } catch (error) {
           console.log(error)
@@ -203,6 +207,7 @@ export const Form = ({ state, data }: FormProps) => {
         title={state === 'create' ? 'Cadastrar refeição' : 'Salvar alterações'}
         onClick={handleSubmit}
       />
+      <ToastContainer />
     </form>
   )
 }

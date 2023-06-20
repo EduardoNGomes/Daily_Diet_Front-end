@@ -8,6 +8,7 @@ import * as Dialog from '@radix-ui/react-dialog'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useCookies } from 'react-cookie'
+import { ToastContainer, toast } from 'react-toastify'
 
 import { api } from '../lib/axios'
 import { MealsProps } from '../types/App-types'
@@ -39,7 +40,8 @@ export const Details = () => {
           Authorization: `Bearer ${cookie.token}`,
         },
       })
-      alert(response.data)
+      toast.success(response.data, { autoClose: 3000, theme: 'colored' })
+
       navigate('/')
     } catch (error) {
       console.log(error)
@@ -116,6 +118,7 @@ export const Details = () => {
                   />
                 </Dialog.Close>
                 <Button onClick={handleDeleteFood} title="Sim, exluir" />
+                <ToastContainer />
               </div>
             </Dialog.Content>
           </Dialog.Portal>

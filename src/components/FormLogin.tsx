@@ -4,6 +4,7 @@ import { api } from '../lib/axios'
 import { EnvelopeSimple, LockOpen, User } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import { ToastContainer, toast } from 'react-toastify'
 
 interface FormLoginProps {
   type: 'create' | 'entry' | 'update'
@@ -42,7 +43,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           name.length === 0 ||
           imageSelected === null
         ) {
-          return alert('Preencha todos os campos')
+          return toast.warn('Preencha todos os campos', {
+            autoClose: 3000,
+            theme: 'dark',
+          })
         }
 
         const form = new FormData()
@@ -52,7 +56,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
         form.append('avatarImage', avatarUrl![0])
         try {
           const response = await api.post('/users', form)
-          alert(response.data)
+          toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate('/')
           break
         } catch (error) {
@@ -61,7 +65,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
       }
       case 'entry': {
         if (!email || !password) {
-          return alert('Preencha todos os campos')
+          return toast.warn('Preencha todos os campos', {
+            autoClose: 3000,
+            theme: 'dark',
+          })
         }
         try {
           await api.post('/auth', {
@@ -81,7 +88,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           newPassword.length === 0 ||
           name.length === 0
         ) {
-          return alert('Preencha todos os campos')
+          return toast.warn('Preencha todos os campos', {
+            autoClose: 3000,
+            theme: 'dark',
+          })
         }
 
         const form = new FormData()
@@ -97,7 +107,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           const response = await api.put('/users', form, {
             headers: { Authorization: `Bearer ${cookie.token}` },
           })
-          alert(response.data)
+          toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate('/')
           break
         } catch (error) {
@@ -105,7 +115,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
         }
       }
       default: {
-        console.log('hello')
+        console.log('invalid type')
       }
     }
   }
@@ -275,6 +285,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
       )}
 
       <Button onClick={handleClickButton} title="Entrar" />
+      <ToastContainer />
     </form>
   )
 }
