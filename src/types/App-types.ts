@@ -21,3 +21,6 @@ export interface UserProps {
   email: string
   name: string
 }
+export interface ApiResponse {
+  message: string
+}

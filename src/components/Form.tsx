@@ -7,6 +7,8 @@ import { useCookies } from 'react-cookie'
 import InputMask from 'react-input-mask'
 import { separateDate } from '../utils/separateDate'
 import { ToastContainer, toast } from 'react-toastify'
+import { AxiosError } from 'axios'
+import { ApiResponse } from '../types/App-types'
 
 interface FormProps {
   state: 'create' | 'update'
@@ -84,8 +86,19 @@ export const Form = ({ state, data }: FormProps) => {
             } `,
           )
         } catch (error) {
-          console.log(error)
           setButtonDisabled(false)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
         break
       }
@@ -109,8 +122,19 @@ export const Form = ({ state, data }: FormProps) => {
           toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate(`/`)
         } catch (error) {
-          console.log(error)
           setButtonDisabled(false)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
 
         break

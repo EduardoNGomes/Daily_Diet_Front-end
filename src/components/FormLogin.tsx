@@ -5,6 +5,8 @@ import { EnvelopeSimple, LockOpen, User } from '@phosphor-icons/react'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 import { ToastContainer, toast } from 'react-toastify'
+import { AxiosError } from 'axios'
+import { ApiResponse } from '../types/App-types'
 
 interface FormLoginProps {
   type: 'create' | 'entry' | 'update'
@@ -64,7 +66,18 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           navigate('/')
         } catch (error) {
           setButtonDisabled(false)
-          console.log(error)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
         break
       }
@@ -85,7 +98,18 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           window.location.reload()
         } catch (error) {
           setButtonDisabled(false)
-          console.log(error)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
         break
       }
@@ -121,8 +145,18 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           navigate('/')
         } catch (error) {
           setButtonDisabled(false)
-
-          console.log(error)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
         break
       }
@@ -145,7 +179,18 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           `${api.defaults.baseURL}/users/avatar/${response.data.avatarUrl}`,
         )
       } catch (error) {
-        console.log(error)
+        if (error instanceof Error) {
+          if (error instanceof AxiosError) {
+            const axiosError = error as AxiosError
+            if (axiosError.response?.data) {
+              console.log(axiosError.response)
+              const errorMessage = axiosError.response.data as ApiResponse
+              alert(errorMessage.message ?? 'undefined')
+            }
+          } else {
+            console.log(error)
+          }
+        }
       }
     }
     if (type === 'update') {
