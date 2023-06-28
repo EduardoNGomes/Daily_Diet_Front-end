@@ -13,7 +13,7 @@ interface FormLoginProps {
 }
 
 export const FormLogin = ({ type }: FormLoginProps) => {
-  const [cookie] = useCookies(['token'])
+  const [cookie, setCookie] = useCookies(['token'])
   const navigate = useNavigate()
 
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -97,10 +97,11 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           })
         }
         try {
-          await api.post('/auth', {
+          const response = await api.post('/auth', {
             email,
             password,
           })
+          setCookie('token', response.data.token)
           window.location.reload()
         } catch (error) {
           setButtonDisabled(false)
