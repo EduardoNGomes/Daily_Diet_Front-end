@@ -1,0 +1,7 @@
+[
+  {
+    "src": "/(.*)",
+    "headers": { "Location": "/" },
+    "status": 301
+  }
+]
