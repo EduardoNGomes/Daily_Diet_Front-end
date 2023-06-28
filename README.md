@@ -4,12 +4,11 @@
 
 <p align="center">
   <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-projeto">Projeto</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-  <a href="#-licença">Licença</a>
+  <a href="#-projeto">Projeto</a>
 </p>
 
 <p align="center">
-  <img alt="License" src="https://i.imgur.com/CIzdZLn.png">
+  <img alt="License" src="https://i.imgur.com/yQZx1rW.png">
 </p>
 
 <br>
@@ -31,10 +30,11 @@ Projeto desenvolvido para complementar um [desafio](https://github.com/EduardoNG
 
 - Clone este repositório
 - Execute o comando ```npm install```
+- Configura o arquivo .env conforme o exemplo
 - Execute o comando ```npm run dev```
 
 ### Para testar toda a aplicação utilize o Back-End
-[Daily Diet API]([https://github.com/EduardoNGomes/velours-server](https://github.com/EduardoNGomes/Daily_Diet_API))
+[Daily Diet API](https://github.com/EduardoNGomes/Daily_Diet_API)
 
 ## Licença
 
@@ -54,7 +54,7 @@ Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE.md) para
    </thead>
    <tbody>
       <tr>
-         <td><a href="https://github.com/eduardongomes">Lara Azevedo</a></td>
+         <td><a href="https://github.com/eduardongomes">Eduardo Gomes</a></td>
       </tr>
    </tbody>
 </table>
