@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import { LayoutPag } from '../components/LayoutPage'
 import { MainMetrics } from '../components/MainMetrics'
-import { StatisticsProps } from '../types/App-types'
+import { ApiResponse, StatisticsProps } from '../types/App-types'
 import { api } from '../lib/axios'
 import { useCookies } from 'react-cookie'
+import { AxiosError } from 'axios'
 
 export const Metrics = () => {
   const [statistic, setStatistic] = useState({} as StatisticsProps)
@@ -21,7 +22,18 @@ export const Metrics = () => {
 
         setStatistic(response.data)
       } catch (error) {
-        console.log(error)
+        if (error instanceof Error) {
+          if (error instanceof AxiosError) {
+            const axiosError = error as AxiosError
+            if (axiosError.response?.data) {
+              console.log(axiosError.response)
+              const errorMessage = axiosError.response.data as ApiResponse
+              alert(errorMessage.message ?? 'undefined')
+            }
+          } else {
+            console.log(error)
+          }
+        }
       }
     }
     getData()

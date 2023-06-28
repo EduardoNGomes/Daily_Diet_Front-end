@@ -9,7 +9,13 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { api } from '../lib/axios'
 import { useCookies } from 'react-cookie'
-import { MealsProps, StatisticsProps, UserProps } from '../types/App-types'
+import {
+  ApiResponse,
+  MealsProps,
+  StatisticsProps,
+  UserProps,
+} from '../types/App-types'
+import { AxiosError } from 'axios'
 
 interface HomeDataProps {
   data: string
@@ -51,14 +57,25 @@ export const Home = () => {
         setMeals(responseMeal.data)
         setStatistic(responseStatistic.data)
       } catch (error) {
-        console.log(error)
+        if (error instanceof Error) {
+          if (error instanceof AxiosError) {
+            const axiosError = error as AxiosError
+            if (axiosError.response?.data) {
+              console.log(axiosError.response)
+              const errorMessage = axiosError.response.data as ApiResponse
+              alert(errorMessage.message ?? 'undefined')
+            }
+          } else {
+            console.log(error)
+          }
+        }
       }
     }
     getData()
   }, [cookie])
 
   return (
-    <main className="flex flex-col gap-10 p-6 ">
+    <main className="flex max-w-5xl flex-col gap-10 p-6 md:mx-auto">
       <Profile avatarUrl={user.avatarUrl} name={user.name} />
       <Statistic
         percentage={

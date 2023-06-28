@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "author": {"name": "eduardo","email": "eduardo_n_gomes.dev@hotmail.com", "url": "https://www.linkedin.com/in/eduardo-n-gomes/"},
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

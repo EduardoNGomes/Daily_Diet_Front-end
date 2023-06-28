@@ -11,11 +11,14 @@ import { useCookies } from 'react-cookie'
 import { ToastContainer, toast } from 'react-toastify'
 
 import { api } from '../lib/axios'
-import { MealsProps } from '../types/App-types'
+import { ApiResponse, MealsProps } from '../types/App-types'
+import { AxiosError } from 'axios'
 
 export const Details = () => {
   const [meal, setMeal] = useState({} as MealsProps)
   const [cookie] = useCookies(['token'])
+
+  const [buttonDisabled, setButtonDisabled] = useState(false)
 
   const params = useParams()
   const navigate = useNavigate()
@@ -34,6 +37,7 @@ export const Details = () => {
   }
 
   const handleDeleteFood = async () => {
+    setButtonDisabled(true)
     try {
       const response = await api.delete(`/meals/${params.id}`, {
         headers: {
@@ -44,7 +48,19 @@ export const Details = () => {
 
       navigate('/')
     } catch (error) {
-      console.log(error)
+      setButtonDisabled(false)
+      if (error instanceof Error) {
+        if (error instanceof AxiosError) {
+          const axiosError = error as AxiosError
+          if (axiosError.response?.data) {
+            console.log(axiosError.response)
+            const errorMessage = axiosError.response.data as ApiResponse
+            alert(errorMessage.message ?? 'undefined')
+          }
+        } else {
+          console.log(error)
+        }
+      }
     }
   }
 
@@ -58,7 +74,18 @@ export const Details = () => {
         })
         setMeal(response.data)
       } catch (error) {
-        console.log(error)
+        if (error instanceof Error) {
+          if (error instanceof AxiosError) {
+            const axiosError = error as AxiosError
+            if (axiosError.response?.data) {
+              console.log(axiosError.response)
+              const errorMessage = axiosError.response.data as ApiResponse
+              alert(errorMessage.message ?? 'undefined')
+            }
+          } else {
+            console.log(error)
+          }
+        }
       }
     }
     getData()
@@ -117,7 +144,11 @@ export const Details = () => {
                     color="white"
                   />
                 </Dialog.Close>
-                <Button onClick={handleDeleteFood} title="Sim, exluir" />
+                <Button
+                  onClick={handleDeleteFood}
+                  title="Sim, exluir"
+                  disabled={buttonDisabled}
+                />
                 <ToastContainer />
               </div>
             </Dialog.Content>

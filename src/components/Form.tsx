@@ -7,6 +7,8 @@ import { useCookies } from 'react-cookie'
 import InputMask from 'react-input-mask'
 import { separateDate } from '../utils/separateDate'
 import { ToastContainer, toast } from 'react-toastify'
+import { AxiosError } from 'axios'
+import { ApiResponse } from '../types/App-types'
 
 interface FormProps {
   state: 'create' | 'update'
@@ -23,6 +25,8 @@ interface FormProps {
 
 export const Form = ({ state, data }: FormProps) => {
   const [cookie] = useCookies(['token'])
+
+  const [buttonDisabled, setButtonDisabled] = useState(false)
 
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
@@ -44,13 +48,17 @@ export const Form = ({ state, data }: FormProps) => {
   }
 
   const handleSubmit = async () => {
+    setButtonDisabled(true)
     if (!name || !description || !date || !time) {
+      setButtonDisabled(false)
+
       return toast.warn('Preencha todos os campos', {
         autoClose: 3000,
         theme: 'dark',
       })
     }
     if (!isOnDietActive && !isOffDietActive) {
+      setButtonDisabled(false)
       return toast('Informe se está dentro ou fora da dieta')
     }
     switch (state) {
@@ -78,7 +86,19 @@ export const Form = ({ state, data }: FormProps) => {
             } `,
           )
         } catch (error) {
-          console.log(error)
+          setButtonDisabled(false)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
         break
       }
@@ -102,7 +122,19 @@ export const Form = ({ state, data }: FormProps) => {
           toast.success(response.data, { autoClose: 3000, theme: 'colored' })
           navigate(`/`)
         } catch (error) {
-          console.log(error)
+          setButtonDisabled(false)
+          if (error instanceof Error) {
+            if (error instanceof AxiosError) {
+              const axiosError = error as AxiosError
+              if (axiosError.response?.data) {
+                console.log(axiosError.response)
+                const errorMessage = axiosError.response.data as ApiResponse
+                alert(errorMessage.message ?? 'undefined')
+              }
+            } else {
+              console.log(error)
+            }
+          }
         }
 
         break
@@ -154,8 +186,8 @@ export const Form = ({ state, data }: FormProps) => {
         />
       </div>
 
-      <div className="flex  gap-2">
-        <div>
+      <div className="flex  gap-2 md:w-full">
+        <div className="md:w-full">
           <label htmlFor="data" className="text-sm font-bold text-gray-2">
             Data
           </label>
@@ -170,7 +202,7 @@ export const Form = ({ state, data }: FormProps) => {
           />
         </div>
 
-        <div>
+        <div className="md:w-full">
           <label htmlFor="time" className="text-sm font-bold text-gray-2">
             Hora
           </label>
@@ -206,6 +238,7 @@ export const Form = ({ state, data }: FormProps) => {
       <Button
         title={state === 'create' ? 'Cadastrar refeição' : 'Salvar alterações'}
         onClick={handleSubmit}
+        disabled={buttonDisabled}
       />
       <ToastContainer />
     </form>
