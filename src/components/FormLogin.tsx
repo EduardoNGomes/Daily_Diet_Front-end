@@ -42,6 +42,12 @@ export const FormLogin = ({ type }: FormLoginProps) => {
     setButtonDisabled(true)
     switch (type) {
       case 'create': {
+        if (password.length < 8) {
+          return toast.warn('Senha deve conter no mínimo 8 caracteres', {
+            autoClose: 3000,
+            theme: 'dark',
+          })
+        }
         if (
           email.length === 0 ||
           password.length === 0 ||
@@ -257,7 +263,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
           className="absolute bottom-3 left-3 text-gray-3"
         />
         <input
-          type="text"
+          type="email"
           name="email"
           id="email"
           className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
@@ -290,6 +296,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               onChange={(e) => setOldPassword(e.target.value)}
               value={oldPassword}
               required
+              min="8"
             />
           </div>
 
@@ -312,6 +319,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               placeholder="digite sua senha"
               onChange={(e) => setNewPassword(e.target.value)}
               value={newPassword}
+              min="8"
               required
             />
           </div>
@@ -336,6 +344,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             placeholder="digite sua senha"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
+            min="8"
             required
           />
         </div>
