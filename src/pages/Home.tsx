@@ -78,11 +78,7 @@ export const Home = () => {
     <main className="flex max-w-5xl flex-col gap-10 p-6 md:mx-auto">
       <Profile avatarUrl={user.avatarUrl} name={user.name} />
       <Statistic
-        percentage={
-          Number(statistic.percentageOnDiet) >= 50
-            ? statistic.percentageOnDiet
-            : statistic.percentageOffDiet
-        }
+        percentage={Number(statistic.percentageOnDiet)}
         onDiet={Number(statistic.percentageOnDiet) >= 50}
       />
       <div className="flex flex-col items-center gap-3">
