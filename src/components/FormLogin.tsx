@@ -221,7 +221,6 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             name="image"
             id="image"
             className="hidden"
-            placeholder="digite seu nome"
             onChange={handleImageSelect}
           />
           {imageSelected && (
@@ -293,7 +292,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               name="oldPassword"
               id="oldPassword"
               className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
-              placeholder="digite sua senha"
+              placeholder="digite sua senha (min - 8 caracteres)"
               onChange={(e) => setOldPassword(e.target.value)}
               value={oldPassword}
               required
@@ -317,7 +316,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               name="newPassword"
               id="newPassword"
               className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
-              placeholder="digite sua senha"
+              placeholder="digite sua senha (min - 8 caracteres)"
               onChange={(e) => setNewPassword(e.target.value)}
               value={newPassword}
               min="8"
@@ -342,7 +341,7 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             name="password"
             id="password"
             className="rounded-full border border-gray-6 py-2 pl-8 pr-2 text-gray-2 outline-green-mid focus:outline-green-mid"
-            placeholder="digite sua senha"
+            placeholder="digite sua senha (min - 8 caracateres)"
             onChange={(e) => setPassword(e.target.value)}
             value={password}
             min="8"

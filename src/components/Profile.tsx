@@ -22,7 +22,7 @@ export const Profile = ({ avatarUrl, name }: ProfileProps) => {
 
   return (
     <header className="flex items-center justify-between">
-      <img src={logo} alt="" />
+      <img src={logo} alt="" className="cursor-pointer hover:brightness-110" />
       <div className="flex items-center justify-center gap-2">
         <div className="flex flex-col items-end justify-end self-end text-sm">
           <p className="font-bold text-gray-1">{name}</p>

@@ -83,6 +83,7 @@ export const Home = () => {
             ? statistic.percentageOnDiet
             : statistic.percentageOffDiet
         }
+        onDiet={Number(statistic.percentageOnDiet) >= 50}
       />
       <div className="flex flex-col items-center gap-3">
         <h3 className="self-start text-base leading-5 text-gray-1">

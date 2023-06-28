@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 
 interface StatisticProps {
   percentage: string | number
+  onDiet?: boolean
 }
 
-export const Statistic = ({ percentage }: StatisticProps) => {
+export const Statistic = ({ percentage, onDiet }: StatisticProps) => {
   const navigate = useNavigate()
 
   const handleToPageMetrics = () => {
@@ -14,7 +15,7 @@ export const Statistic = ({ percentage }: StatisticProps) => {
   return (
     <div
       className={`flex w-full flex-col items-center gap-2 rounded px-2 pb-6   pt-2 ${
-        Number(percentage) >= 50 ? 'bg-green-light' : 'bg-red-light'
+        Number(percentage) >= 50 && onDiet ? 'bg-green-light' : 'bg-red-light'
       }`}
     >
       <span className="cursor-pointer self-end" onClick={handleToPageMetrics}>
