@@ -26,6 +26,7 @@ interface HomeDataProps {
 export const Home = () => {
   const navigate = useNavigate()
   const [cookie] = useCookies(['token'])
+
   const [meals, setMeals] = useState<HomeDataProps[] | []>([])
   const [statistic, setStatistic] = useState({} as StatisticsProps)
   const [user, setUser] = useState({} as UserProps)
@@ -75,7 +76,7 @@ export const Home = () => {
     getData()
   }, [cookie])
 
-  if (!user.name) {
+  if (!setStatistic || !user.name || !meals) {
     return <SkeletonLoading />
   }
   return (
