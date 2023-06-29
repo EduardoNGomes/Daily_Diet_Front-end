@@ -13,6 +13,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import { api } from '../lib/axios'
 import { ApiResponse, MealsProps } from '../types/App-types'
 import { AxiosError } from 'axios'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 
 export const Details = () => {
   const [meal, setMeal] = useState({} as MealsProps)
@@ -90,6 +91,10 @@ export const Details = () => {
     }
     getData()
   }, [cookie, params])
+
+  if (!meal) {
+    return <SkeletonLoading />
+  }
   return (
     <LayoutPag color={meal.isOnDiet === 1 ? 'bg-green-light' : 'bg-red-light'}>
       <Header title="Refeição" iconColor="text-gray-2" />
@@ -132,7 +137,7 @@ export const Details = () => {
           </Dialog.Trigger>
           <Dialog.Portal>
             <Dialog.Overlay className="fixed inset-0 h-screen w-screen bg-overlay" />
-            <Dialog.Content className="fixed left-2/4 top-2/4 flex w-10/12 -translate-x-2/4 -translate-y-2/4 flex-col gap-8 rounded-lg bg-gray-7 px-6 py-10">
+            <Dialog.Content className="fixed left-2/4 top-2/4 flex w-10/12 max-w-md -translate-x-2/4 -translate-y-2/4 flex-col gap-8 rounded-lg bg-gray-7 px-6 py-10">
               <Dialog.Title className="text-center text-lg font-bold text-gray-2">
                 Deseja realmente excluir o registro da refeição?
               </Dialog.Title>
@@ -146,7 +151,7 @@ export const Details = () => {
                 </Dialog.Close>
                 <Button
                   onClick={handleDeleteFood}
-                  title="Sim, exluir"
+                  title="Sim, excluir"
                   disabled={buttonDisabled}
                 />
                 <ToastContainer />

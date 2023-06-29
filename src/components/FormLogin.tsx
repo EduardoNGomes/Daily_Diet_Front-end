@@ -7,6 +7,7 @@ import { useCookies } from 'react-cookie'
 import { ToastContainer, toast } from 'react-toastify'
 import { AxiosError } from 'axios'
 import { ApiResponse } from '../types/App-types'
+import { SkeletonLoading } from './SkeletonLoading'
 
 interface FormLoginProps {
   type: 'create' | 'entry' | 'update'
@@ -38,11 +39,29 @@ export const FormLogin = ({ type }: FormLoginProps) => {
     setAvatarUrl(files)
     setImageSelected(previewURL)
   }
+  const emailIsValid = (email: string) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (regex.test(email)) {
+      return true
+    } else {
+      return false
+    }
+  }
   const handleClickButton = async () => {
     setButtonDisabled(true)
     switch (type) {
       case 'create': {
+        const validEmail = emailIsValid(email)
+        if (!validEmail) {
+          setButtonDisabled(false)
+          return toast.warn('Email inválido', {
+            autoClose: 3000,
+            theme: 'dark',
+          })
+        }
         if (password.length < 8) {
+          setButtonDisabled(false)
           return toast.warn('Senha deve conter no mínimo 8 caracteres', {
             autoClose: 3000,
             theme: 'dark',
@@ -88,6 +107,14 @@ export const FormLogin = ({ type }: FormLoginProps) => {
         break
       }
       case 'entry': {
+        const validEmail = emailIsValid(email)
+        if (!validEmail) {
+          setButtonDisabled(false)
+          return toast.warn('Email inválido', {
+            autoClose: 3000,
+            theme: 'dark',
+          })
+        }
         if (!email || !password) {
           setButtonDisabled(false)
 
@@ -204,6 +231,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
       getDate()
     }
   }, [cookie, type])
+
+  if (type === 'update' && !name) {
+    return <SkeletonLoading />
+  }
   return (
     <form className="flex w-full flex-col gap-4">
       {type === 'entry' ? (

@@ -3,7 +3,11 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "author": {"name": "eduardo","email": "eduardo_n_gomes.dev@hotmail.com", "url": "https://www.linkedin.com/in/eduardo-n-gomes/"},
+  "author": {
+    "name": "eduardo",
+    "email": "eduardo_n_gomes.dev@hotmail.com",
+    "url": "https://www.linkedin.com/in/eduardo-n-gomes/"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -17,6 +21,7 @@
     "axios": "^1.4.0",
     "eslint-plugin-tailwindcss": "^3.12.1",
     "react": "^18.2.0",
+    "react-content-loader": "^6.2.1",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
     "react-input-mask": "^2.0.4",

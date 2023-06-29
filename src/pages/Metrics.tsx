@@ -6,6 +6,7 @@ import { ApiResponse, StatisticsProps } from '../types/App-types'
 import { api } from '../lib/axios'
 import { useCookies } from 'react-cookie'
 import { AxiosError } from 'axios'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 
 export const Metrics = () => {
   const [statistic, setStatistic] = useState({} as StatisticsProps)
@@ -38,6 +39,9 @@ export const Metrics = () => {
     }
     getData()
   }, [cookie])
+  if (!statistic) {
+    return <SkeletonLoading />
+  }
   return (
     <LayoutPag
       color={

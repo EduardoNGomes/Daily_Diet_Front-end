@@ -17,7 +17,10 @@ export const Header = ({ title, subtitle, iconColor }: HeaderProps) => {
 
   return (
     <header className="flex flex-col items-center p-6 md:mx-auto md:w-1/2">
-      <button className={`self-start hover:brightness-50`} onClick={handleBack}>
+      <button
+        className={`self-start hover:brightness-50 md:-ml-6`}
+        onClick={handleBack}
+      >
         <ArrowLeft size={24} className={iconColor} />
       </button>
       <div className="flex flex-col items-center">

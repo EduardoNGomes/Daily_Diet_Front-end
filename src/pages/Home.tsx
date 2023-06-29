@@ -16,6 +16,7 @@ import {
   UserProps,
 } from '../types/App-types'
 import { AxiosError } from 'axios'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 
 interface HomeDataProps {
   data: string
@@ -74,6 +75,9 @@ export const Home = () => {
     getData()
   }, [cookie])
 
+  if (!user.name) {
+    return <SkeletonLoading />
+  }
   return (
     <main className="flex max-w-5xl flex-col gap-10 p-6 md:mx-auto">
       <Profile avatarUrl={user.avatarUrl} name={user.name} />

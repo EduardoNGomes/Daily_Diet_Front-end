@@ -14,7 +14,7 @@ export const ButtonForm = ({
   return (
     <button
       onClick={onClick}
-      className={`p-4 w-full flex items-center justify-center gap-2 rounded-md text-sm text-gray-1 font-bold border  ${
+      className={`flex w-full items-center justify-center gap-2 rounded-md border p-4 text-sm font-bold text-gray-1  ${
         active && onDiet === true
           ? ' border-green-dark bg-green-mid'
           : active && onDiet === false
@@ -24,7 +24,7 @@ export const ButtonForm = ({
       type="button"
     >
       <span
-        className={`block w-2 h-2 rounded-full ${
+        className={`block h-2 w-2 rounded-full ${
           onDiet ? 'bg-green-dark' : 'bg-red-dark'
         }`}
       ></span>

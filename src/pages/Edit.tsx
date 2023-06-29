@@ -7,6 +7,7 @@ import { MealsProps } from '../types/App-types'
 import { useCookies } from 'react-cookie'
 import { api } from '../lib/axios'
 import { useParams } from 'react-router-dom'
+import { SkeletonLoading } from '../components/SkeletonLoading'
 
 export const Edit = () => {
   const [meal, setMeal] = useState({} as MealsProps)
@@ -24,6 +25,10 @@ export const Edit = () => {
 
     getData()
   }, [cookie, params])
+
+  if (!meal) {
+    return <SkeletonLoading />
+  }
 
   return (
     <LayoutPag color="bg-gray-5">
