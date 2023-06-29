@@ -39,7 +39,7 @@ export const Metrics = () => {
     }
     getData()
   }, [cookie])
-  if (!statistic.percentageOnDiet) {
+  if (statistic.percentageOnDiet === undefined) {
     return <SkeletonLoading />
   }
   return (
