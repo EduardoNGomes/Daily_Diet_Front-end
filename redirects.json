@@ -1,7 +1,8 @@
 [
   {
-    "src": "/(.*)",
+    "src": "/[^.]+",
+    "dest": "/", 
     "headers": { "Location": "/" },
-    "status": 301
+    "status": 200
   }
 ]
