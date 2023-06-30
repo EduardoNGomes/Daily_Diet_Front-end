@@ -17,6 +17,7 @@ import {
 } from '../types/App-types'
 import { AxiosError } from 'axios'
 import { SkeletonLoading } from '../components/SkeletonLoading'
+import { toast, ToastContainer } from 'react-toastify'
 
 interface HomeDataProps {
   data: string
@@ -65,7 +66,10 @@ export const Home = () => {
             if (axiosError.response?.data) {
               console.log(axiosError.response)
               const errorMessage = axiosError.response.data as ApiResponse
-              alert(errorMessage.message ?? 'undefined')
+              toast.error(errorMessage.message ?? 'undefined', {
+                autoClose: 3000,
+                theme: 'colored',
+              })
             }
           } else {
             console.log(error)
@@ -101,6 +105,7 @@ export const Home = () => {
       {meals.map((element) => (
         <AllMeals key={element.data} AllMeals={element} />
       ))}
+      <ToastContainer />
     </main>
   )
 }

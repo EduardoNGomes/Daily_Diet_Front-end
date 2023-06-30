@@ -56,7 +56,10 @@ export const Details = () => {
           if (axiosError.response?.data) {
             console.log(axiosError.response)
             const errorMessage = axiosError.response.data as ApiResponse
-            alert(errorMessage.message ?? 'undefined')
+            toast.error(errorMessage.message ?? 'undefined', {
+              autoClose: 3000,
+              theme: 'colored',
+            })
           }
         } else {
           console.log(error)
@@ -81,7 +84,10 @@ export const Details = () => {
             if (axiosError.response?.data) {
               console.log(axiosError.response)
               const errorMessage = axiosError.response.data as ApiResponse
-              alert(errorMessage.message ?? 'undefined')
+              toast.error(errorMessage.message ?? 'undefined', {
+                autoClose: 3000,
+                theme: 'colored',
+              })
             }
           } else {
             console.log(error)

@@ -97,7 +97,9 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               if (axiosError.response?.data) {
                 console.log(axiosError.response)
                 const errorMessage = axiosError.response.data as ApiResponse
-                alert(errorMessage.message ?? 'undefined')
+                toast.error(errorMessage.message ?? 'undefined', {
+                  autoClose: 3,
+                })
               }
             } else {
               console.log(error)
@@ -138,7 +140,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               if (axiosError.response?.data) {
                 console.log(axiosError.response)
                 const errorMessage = axiosError.response.data as ApiResponse
-                alert(errorMessage.message ?? 'undefined')
+                toast.error(errorMessage.message ?? 'undefined', {
+                  autoClose: 3000,
+                  theme: 'colored',
+                })
               }
             } else {
               console.log(error)
@@ -185,7 +190,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
               if (axiosError.response?.data) {
                 console.log(axiosError.response)
                 const errorMessage = axiosError.response.data as ApiResponse
-                alert(errorMessage.message ?? 'undefined')
+                toast.error(errorMessage.message ?? 'undefined', {
+                  autoClose: 3000,
+                  theme: 'colored',
+                })
               }
             } else {
               console.log(error)
@@ -219,7 +227,10 @@ export const FormLogin = ({ type }: FormLoginProps) => {
             if (axiosError.response?.data) {
               console.log(axiosError.response)
               const errorMessage = axiosError.response.data as ApiResponse
-              alert(errorMessage.message ?? 'undefined')
+              toast.error(errorMessage.message ?? 'undefined', {
+                autoClose: 3000,
+                theme: 'colored',
+              })
             }
           } else {
             console.log(error)
